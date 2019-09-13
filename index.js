@@ -1,14 +1,4 @@
 import {Navigation} from 'react-native-navigation';
-import {registerScreens} from './src/screens';
+import {pushMainScreen} from './src/navigation/index';
 
-registerScreens();
-
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      component: {
-        name: 'Initializing',
-      },
-    },
-  });
-});
+Navigation.events().registerAppLaunchedListener(() => pushMainScreen());
