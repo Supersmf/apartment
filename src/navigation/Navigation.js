@@ -3,9 +3,8 @@ import {Navigation} from 'react-native-navigation';
 
 import {
   MAIN_SCREEN,
-  // SINGLE_APP_SCREEN,
-  // TAB1_SCREEN,
-  // TAB2_SCREEN,
+  PROPERTY_SCREEN,
+  APARTMENT_DETAILS_SCREEN,
 } from './Screens';
 import registerScreens from './registerScreens';
 
@@ -63,13 +62,16 @@ export function pushMainScreen() {
       //     }
       //   ]
       // },
+      id: 'MAIN_SCREEN',
       bottomTabs: {
         children: [
           {
             stack: {
+              id: 'MAIN_SCREEN',
               children: [
                 {
                   component: {
+                    id: 'MAIN_SCREEN',
                     name: MAIN_SCREEN,
                     options: {
                       topBar: {
@@ -109,11 +111,11 @@ export function pushMainScreen() {
               children: [
                 {
                   component: {
-                    name: MAIN_SCREEN, //TODO
+                    name: PROPERTY_SCREEN, //TODO
                     options: {
                       topBar: {
                         title: {
-                          text: 'TAB 2',
+                          text: 'Property',
                         },
                         leftButtons: [
                           {
@@ -149,6 +151,24 @@ export function pushMainScreen() {
     },
   });
 }
+
+export const pushApartmentDetailsScreen = (componentId, props) => {
+  console.log(componentId);
+
+  Navigation.push(componentId, {
+    component: {
+      name: APARTMENT_DETAILS_SCREEN,
+      passProps: props,
+      options: {
+        topBar: {
+          title: {
+            text: 'ApartmentDetailScreen',
+          },
+        },
+      },
+    },
+  });
+};
 
 // export function pushSingleScreenApp() {
 //   Navigation.setRoot({
