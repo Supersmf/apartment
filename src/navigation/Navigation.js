@@ -45,33 +45,14 @@ export function pushMainScreen() {
 
   Navigation.setRoot({
     root: {
-      // stack: {
-      //   children: [
-      //     {
-      //       component: {
-      //         name: WELCOME_SCREEN,
-      //         options: {
-      //           topBar: {
-      //             // visible: false
-      //           },
-      //           statusBar: {
-      //             style: 'dark'
-      //           }
-      //         }
-      //       }
-      //     }
-      //   ]
-      // },
       id: 'MAIN_SCREEN',
       bottomTabs: {
         children: [
           {
             stack: {
-              id: 'MAIN_SCREEN',
               children: [
                 {
                   component: {
-                    id: 'MAIN_SCREEN',
                     name: MAIN_SCREEN,
                     options: {
                       topBar: {
@@ -153,8 +134,6 @@ export function pushMainScreen() {
 }
 
 export const pushApartmentDetailsScreen = (componentId, props) => {
-  console.log(componentId);
-
   Navigation.push(componentId, {
     component: {
       name: APARTMENT_DETAILS_SCREEN,
@@ -164,6 +143,9 @@ export const pushApartmentDetailsScreen = (componentId, props) => {
           title: {
             text: 'ApartmentDetailScreen',
           },
+        },
+        bottomTabs: {
+          visible: false,
         },
       },
     },

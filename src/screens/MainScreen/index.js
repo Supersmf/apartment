@@ -3,7 +3,11 @@ import {connect} from 'react-redux';
 import MainScreen from './MainScreen';
 import {fetchRentApartments} from '../../duck/thunk';
 
-const MainScreenContainer = ({dispatchFetchRentApartments, apartments}) => {
+const MainScreenContainer = ({
+  dispatchFetchRentApartments,
+  apartments,
+  componentId,
+}) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleRefresh = useCallback(() => {
@@ -12,8 +16,7 @@ const MainScreenContainer = ({dispatchFetchRentApartments, apartments}) => {
       onSuccess: () => setIsRefreshing(false),
       onFailure: () => setIsRefreshing(false),
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatchFetchRentApartments]);
 
   useEffect(handleRefresh, []);
 
@@ -22,6 +25,7 @@ const MainScreenContainer = ({dispatchFetchRentApartments, apartments}) => {
       apartments={apartments}
       isRefreshing={isRefreshing}
       onRefresh={handleRefresh}
+      componentId={componentId}
     />
   );
 };
