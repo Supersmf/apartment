@@ -17,7 +17,7 @@ const fetchRentApartments = ({onSuccess, onFailure}) => async (
     const {city, roomsCount} = state.main;
     const {data} = await api.fetchRentApartments(city, roomsCount);
 
-    dispatch(fetchRentApartmentsSuccess(data));
+    dispatch(fetchRentApartmentsSuccess(data.data));
 
     onSuccess();
   } catch (err) {

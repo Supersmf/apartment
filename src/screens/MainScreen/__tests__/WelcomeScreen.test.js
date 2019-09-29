@@ -4,9 +4,7 @@ import WelcomeScreen from '../WelcomeScreen';
 
 describe('WelcomeScreen', () => {
   it('should render correctly', () => {
-    const component = renderer.create(
-      <WelcomeScreen />
-    );
+    const component = renderer.create(<WelcomeScreen />);
     expect(component).toMatchSnapshot();
   });
 });
