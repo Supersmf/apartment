@@ -1,5 +1,5 @@
 // @flow
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -7,34 +7,32 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
-import styled from 'styled-components/native';
+import Carousel, {ParallaxImage, Pagination} from 'react-native-snap-carousel';
 
-const {width: screenWidth} = Dimensions.get('window');
+const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+
+const ImageItem = ({item, index}, parallaxProps) => (
+  <View style={styles.item}>
+    <ParallaxImage
+      source={{uri: item}}
+      containerStyle={styles.imageContainer}
+      style={styles.image}
+      parallaxFactor={0.4}
+      {...parallaxProps}
+    />
+    {/* <Text style={styles.title} numberOfLines={2}>
+      {'item.title'}
+    </Text> */}
+  </View>
+);
 
 const ImageCarousel = ({imagesUrl}) => {
   const carouselRef = useRef(null);
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const goForward = () => {
-    carouselRef.current.snapToNext();
-  };
-  console.log(imagesUrl);
-
-  const renderItem = ({item, index}, parallaxProps) => (
-    <View style={styles.item}>
-      {console.log(parallaxProps)}
-      <ParallaxImage
-        source={{uri: item}}
-        containerStyle={styles.imageContainer}
-        style={styles.image}
-        parallaxFactor={0.4}
-        {...parallaxProps}
-      />
-      {/* <Text style={styles.title} numberOfLines={2}>
-          {'item.title'}
-        </Text> */}
-    </View>
-  );
+  // const goForward = () => {
+  //   carouselRef.current.snapToNext();
+  // };
 
   return (
     // <View>
@@ -45,11 +43,31 @@ const ImageCarousel = ({imagesUrl}) => {
       <Carousel
         ref={carouselRef}
         sliderWidth={screenWidth}
-        sliderHeight={screenWidth}
-        itemWidth={screenWidth - 60}
+        // sliderHeight={screenWidth}
+        itemWidth={screenWidth}
         data={imagesUrl}
-        renderItem={renderItem}
+        renderItem={ImageItem}
         hasParallaxImages={true}
+        onSnapToItem={index => setActiveSlide(index)}
+      />
+      <Pagination
+        dotsLength={imagesUrl.length}
+        activeDotIndex={activeSlide}
+        containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}
+        dotStyle={{
+          width: 10,
+          height: 10,
+          borderRadius: 5,
+          marginHorizontal: 8,
+          backgroundColor: 'rgba(255, 255, 255, 0.92)',
+        }}
+        inactiveDotStyle={
+          {
+            // Define styles for inactive dots here
+          }
+        }
+        inactiveDotOpacity={0.4}
+        inactiveDotScale={0.6}
       />
     </View>
     // </View>
@@ -58,47 +76,19 @@ const ImageCarousel = ({imagesUrl}) => {
 
 export default ImageCarousel;
 
-const VideoTitleText = styled.Text`
-  color: white;
-  top: 28;
-  justify-content: center;
-`;
-const CurrentVideoImage = styled.Image`
-  top: 25;
-  box-shadow: 5px 10px;
-  width: ${screenWidth};
-  height: 230;
-`;
-
-const ThumbnailBackgroundView = styled.View`
-  justify-content: center;
-  align-items: center;
-  width: ${screenWidth};
-`;
-
-const CurrentVideoTO = styled.TouchableOpacity``;
-const CarouselBackgroundView = styled.View`
-  background-color: black;
-  height: 200;
-  width: 100%;
-`;
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: screenHeight / 2,
   },
   item: {
-    width: screenWidth - 60,
-    height: screenWidth - 60,
+    flex: 1,
   },
   imageContainer: {
     flex: 1,
     marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
-    backgroundColor: 'white',
-    borderRadius: 8,
   },
   image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
+    // ...StyleSheet.absoluteFillObject,
+    resizeMode: 'contain',
   },
 });

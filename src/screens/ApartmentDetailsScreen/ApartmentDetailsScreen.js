@@ -3,103 +3,78 @@ import React from 'react';
 import {
   View,
   Text,
-  Dimensions,
   StyleSheet,
   Alert,
   TouchableOpacity,
   Linking,
+  ScrollView,
 } from 'react-native';
-import styled from 'styled-components/native';
 import ImageCarousel from '../../components/ImageCarousel';
-// import { Button } from 'react-native-elements';
-// import {Navigation} from 'react-native-navigation';
-
-const {width: screenWidth} = Dimensions.get('window');
+import Delimiter from '../../components/Delimiter';
+import {colors} from '../../styles';
 
 const ApartmentDetailScreen = ({
   city,
-  street,
-  apartment,
+  address,
   images,
   roomsCount,
   subway,
   description,
-  date,
+  publicationDate,
+  updateDate,
   url,
 }) => {
   return (
-    <View style={{height: '100%'}}>
-      <Text>{`Apartment in ${city}`}</Text>
-      <Text>{`Address: ${street} ${apartment}`}</Text>
-      <Text>{`Rooms count: ${roomsCount}`}</Text>
-      <Text>{`Phone: +${375295754755}`}</Text>
-      {!!subway && <Text>{`Subway: ${subway}`}</Text>}
-      {!!description && <Text>{`Description: ${description}`}</Text>}
-      <Text>{`Date: ${date}`}</Text>
-      <TouchableOpacity
-        onPress={() => Alert.alert('Call tenant')}
-        style={styles.button}>
-        <Text>Call tenant</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => Linking.openURL(url)}
-        style={styles.button}>
-        <Text>Go to ad</Text>
-      </TouchableOpacity>
+    <ScrollView contentInsetAdjustmentBehavior="automatic">
       <ImageCarousel imagesUrl={images} />
-    </View>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity
+          onPress={() => Alert.alert('Call tenant')}
+          style={[styles.button, styles.buttonPrimary]}>
+          <Text>Call</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Linking.openURL(url)}
+          style={styles.button}>
+          <Text>Go to ad</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.infoContainer}>
+        <Text>{`Address: ${city} ${address}`}</Text>
+      </View>
+      <Delimiter />
+      <View style={styles.infoContainer}>
+        <Text>{`Rooms count: ${roomsCount}`}</Text>
+        <Text>{`Phone: +${375295754755}`}</Text>
+        {!!subway && <Text>{`Subway: ${subway}`}</Text>}
+        {!!description && <Text>{`Description: ${description}`}</Text>}
+        <Text>{`Publication Date: ${publicationDate}`}</Text>
+        <Text>{`Update Date: ${updateDate}`}</Text>
+      </View>
+    </ScrollView>
   );
 };
 
 export default ApartmentDetailScreen;
 
-const VideoTitleText = styled.Text`
-  color: white;
-  top: 28;
-  justify-content: center;
-`;
-const CurrentVideoImage = styled.Image`
-  top: 25;
-  box-shadow: 5px 10px;
-  width: ${screenWidth};
-  height: 230;
-`;
-
-const ThumbnailBackgroundView = styled.View`
-  justify-content: center;
-  align-items: center;
-  width: ${screenWidth};
-`;
-
-const CurrentVideoTO = styled.TouchableOpacity``;
-const CarouselBackgroundView = styled.View`
-  background-color: black;
-  height: 200;
-  width: 100%;
-`;
-
 const styles = StyleSheet.create({
-  container: {
+  buttonsContainer: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'stretch',
   },
-  item: {
-    width: screenWidth - 60,
-    height: screenWidth - 60,
-  },
-  imageContainer: {
-    flex: 1,
-    marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
-    backgroundColor: 'white',
-    borderRadius: 8,
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
+  infoContainer: {
+    padding: 10,
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: colors.primary_color,
     padding: 10,
-    width: 100,
+    alignSelf: 'stretch',
+    flex: 1,
+    alignItems: 'center',
+    color: colors.white_color,
+  },
+  buttonPrimary: {
+    backgroundColor: colors.lime_green_color,
   },
 });

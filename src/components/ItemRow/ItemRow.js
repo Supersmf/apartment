@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, Text, View, TouchableOpacity} from 'react-native';
-// import {Ionicons} from '@expo/vector-icons';
 import {itemRowStyle} from './style';
 import {colors} from '../../styles';
 
@@ -8,11 +7,10 @@ const ItemRow = ({
   images,
   roomsCount = 1,
   city,
-  apartment,
+  address,
   description,
   place,
   price,
-  street,
   subway,
   onPress,
 }) => (
@@ -22,19 +20,13 @@ const ItemRow = ({
     </View>
     <View style={itemRowStyle.itemRow__specification}>
       <Text numberOfLines={1} style={itemRowStyle.title}>
-        {`${street}, ${apartment}`}
+        {address}
       </Text>
       <Text numberOfLines={1} style={itemRowStyle.subtitle}>
         {place}
       </Text>
       {!!subway && (
         <View style={itemRowStyle.subwayRow}>
-          {/* <Ionicons
-            name="ios-subway"
-            size={12}
-            // style={{ }}
-            color={colors.primary_color}
-          /> */}
           <Text style={itemRowStyle.subtitle}>{subway}</Text>
         </View>
       )}
