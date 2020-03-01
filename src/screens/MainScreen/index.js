@@ -1,7 +1,7 @@
-import React, {useEffect, useCallback, useState} from 'react';
-import {connect} from 'react-redux';
+import React, { useEffect, useCallback, useState } from 'react';
+import { connect } from 'react-redux';
 import MainScreen from './MainScreen';
-import {fetchRentApartments} from '../../duck/thunk';
+import { fetchRentApartments } from '../../duck/thunk';
 
 const apartments = [
   {
@@ -17,7 +17,6 @@ const apartments = [
       'https://s.domovita.by/images/96/a1134db2bcb75a663329d7a21c648e0f.mini.jpg',
       'https://s.domovita.by/images/bb/aec40ba0e5e3656417a8248fc6559b5e.mini.jpg',
       'https://s.domovita.by/images/f5/c1169fe6506bb3b9e0279db1d48e0e65.mini.jpg',
-      ,
     ],
     _id: '5e56a0c488f1ca0023874c89',
     city: 'Минск',
@@ -61,7 +60,6 @@ const apartments = [
       'https://s.domovita.by/images/ea/18efe5a190b09e35961518b5fa14a937.mini.jpg',
       'https://s.domovita.by/images/da/7dc45e3aca92721ea74c00a038e87e43.mini.jpg',
       'https://s.domovita.by/images/1d/89ed8b61e983b32b8eb2702ae44233dd.mini.jpg',
-      ,
     ],
     _id: '5e56a0c488f1ca0023874c8e',
     city: 'Минск',

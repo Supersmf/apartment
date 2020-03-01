@@ -7,5 +7,5 @@ export default {
   border_radius: 2,
   tiny_icon_size: 22,
   small_icon_size: 40,
-  large_icon_size: 110
+  large_icon_size: 110,
 };

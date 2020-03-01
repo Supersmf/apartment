@@ -1,30 +1,35 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../styles';
+import { StyleSheet } from 'react-native';
+import { colors } from '../../styles';
 
 export const itemRowStyle = StyleSheet.create({
   itemRow: {
     width: '100%',
     backgroundColor: '#fff',
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
+    // borderWidth: 0.5,
+    borderColor: '#fff',
     flexDirection: 'row',
-    height: 70,
+    height: 100,
     alignItems: 'center',
-    borderRadius: 8,
-    marginTop: 5,
+    borderRadius: 2,
+    marginTop: 10,
     elevation: 2,
-    shadowOffset: {width: 5, height: 5},
+    shadowOffset: { width: 5, height: 5 },
     shadowColor: 'grey',
     shadowOpacity: 0.5,
     shadowRadius: 10,
+    overflow: 'hidden',
   },
   itemRow__imageContainer: {
-    width: 60,
-    height: 60,
-    marginLeft: 5,
+    width: 100,
+    height: 100,
+    // marginLeft: 5,
     marginRight: 5,
   },
-  itemRow__image: {width: '100%', height: '100%', borderRadius: 5},
+  itemRow__image: {
+    width: '100%',
+    height: '100%',
+    // borderRadius: 5,
+  },
   title: {
     color: colors.primary_color,
     fontSize: 12,
@@ -38,8 +43,7 @@ export const itemRowStyle = StyleSheet.create({
     fontSize: 10,
     lineHeight: 10,
     color: colors.secondary_color,
-    marginTop: 2,
-    overflow: 'hidden',
+    // marginTop: 2,
   },
   subwayRow: {
     // fontSize: 10,
@@ -55,13 +59,15 @@ export const itemRowStyle = StyleSheet.create({
     marginRight: 0,
     height: '100%',
     flex: 1,
-    backgroundColor: colors.primary_color,
+    // backgroundColor: colors.primary_color,
     alignItems: 'center',
     justifyContent: 'center',
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
   },
-  text_white: {
-    color: colors.white_color,
+  text_primary: {
+    color: colors.primary_color,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
