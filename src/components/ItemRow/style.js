@@ -5,13 +5,12 @@ export const itemRowStyle = StyleSheet.create({
   itemRow: {
     width: '100%',
     backgroundColor: '#fff',
-    // borderWidth: 0.5,
     borderColor: '#fff',
     flexDirection: 'row',
-    height: 100,
+    height: 80,
     alignItems: 'center',
     borderRadius: 2,
-    marginTop: 10,
+    marginTop: 14,
     elevation: 2,
     shadowOffset: { width: 5, height: 5 },
     shadowColor: 'grey',
@@ -19,55 +18,47 @@ export const itemRowStyle = StyleSheet.create({
     shadowRadius: 10,
     overflow: 'hidden',
   },
-  itemRow__imageContainer: {
-    width: 100,
-    height: 100,
-    // marginLeft: 5,
-    marginRight: 5,
+  imageContainer: {
+    width: 80,
+    height: 80,
   },
-  itemRow__image: {
+  image: {
     width: '100%',
     height: '100%',
-    // borderRadius: 5,
   },
   title: {
-    color: colors.primary_color,
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '700',
   },
   subtitle: {
-    fontSize: 11,
+    fontSize: 10,
     lineHeight: 12,
+    paddingTop: 2,
   },
   description: {
     fontSize: 10,
     lineHeight: 10,
     color: colors.secondary_color,
-    // marginTop: 2,
+    paddingTop: 4,
+    overflow: 'hidden',
+    height: 24,
   },
   subwayRow: {
-    // fontSize: 10,
     display: 'flex',
     flexDirection: 'row',
   },
-  itemRow__specification: {
+  specification: {
     height: '100%',
     padding: 5,
+    paddingLeft: 10,
     flex: 4,
   },
-  itemRow__property: {
-    marginRight: 0,
-    height: '100%',
-    flex: 1,
-    // backgroundColor: colors.primary_color,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-  },
-  text_primary: {
+  price: {
     color: colors.primary_color,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
+    position: 'absolute',
+    right: 10,
+    top: 10,
   },
 });

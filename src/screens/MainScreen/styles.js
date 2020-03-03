@@ -1,19 +1,16 @@
-// import styleSheet for creating a css abstraction.
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
-  // scrollContainer: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  // },
-  // developmentModeText: {
-  //   marginBottom: 20,
-  //   color: 'rgba(0,0,0,0.4)',
-  //   fontSize: 14,
-  //   lineHeight: 19,
-  //   textAlign: 'center',
-  // },
+export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f7f7f7',
+    padding: 10,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: 'grey',
+  },
 });
-
-export default styles;
-

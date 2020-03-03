@@ -1,5 +1,5 @@
 // @flow
-import {Navigation} from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 
 import {
   MAIN_SCREEN,
@@ -146,6 +146,8 @@ export const pushApartmentDetailsScreen = (componentId, props) => {
         },
         bottomTabs: {
           visible: false,
+          translucent: true,
+          drawBehind: true,
         },
       },
     },

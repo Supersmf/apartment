@@ -33,15 +33,11 @@ const ImageCarousel = ({ imagesUrl }) => {
 
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity onPress={goForward}>
-        <Text>go to next slide</Text>
-      </TouchableOpacity> */}
       <Pagination
         dotsLength={imagesUrl.length}
         activeDotIndex={activeSlide}
         containerStyle={styles.paginationContainer}
         dotStyle={styles.paginationDot}
-        // inactiveDotStyle={}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
       />
@@ -72,13 +68,13 @@ const styles = StyleSheet.create({
     marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
   },
   image: {
-    // ...StyleSheet.absoluteFillObject,
     resizeMode: 'contain',
   },
   paginationContainer: {
     position: 'absolute',
     zIndex: 10,
     width: screenWidth,
+    paddingVertical: 20,
   },
   paginationDot: {
     width: 20,

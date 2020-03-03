@@ -1,11 +1,10 @@
 import React from 'react';
 import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { itemRowStyle } from './style';
-// import { colors } from '../../styles';
 
 const ItemRow = ({
   images,
-  roomsCount = 1,
+  roomsCount,
   city,
   address,
   description,
@@ -13,31 +12,29 @@ const ItemRow = ({
   price,
   subway,
   onPress,
+  updateDate,
 }) => (
   <TouchableOpacity style={itemRowStyle.itemRow} onPress={onPress}>
-    <View style={itemRowStyle.itemRow__imageContainer}>
-      <Image source={{ uri: images[0] }} style={itemRowStyle.itemRow__image} />
+    <View style={itemRowStyle.imageContainer}>
+      <Image source={{ uri: images[0] }} style={itemRowStyle.image} />
     </View>
-    <View style={itemRowStyle.itemRow__specification}>
+    <View style={itemRowStyle.specification}>
       <Text numberOfLines={1} style={itemRowStyle.title}>
-        {`${city}, ${address}`}
+        {address}
       </Text>
       <Text numberOfLines={1} style={itemRowStyle.subtitle}>
-        {place}
+        {updateDate}
       </Text>
       {!!subway && (
         <View style={itemRowStyle.subwayRow}>
-          <Text style={itemRowStyle.subtitle}>{subway}</Text>
+          <Text style={itemRowStyle.subtitle}>Метро: {subway}</Text>
         </View>
       )}
       <Text ellipsizeMode="tail" style={itemRowStyle.description}>
         {description}
       </Text>
     </View>
-    <View style={itemRowStyle.itemRow__property}>
-      {/* <Text style={itemRowStyle.text_primary}>{`к-т: ${roomsCount}`}</Text> */}
-      <Text style={itemRowStyle.text_primary}>{`$ ${price}`}</Text>
-    </View>
+    <Text style={itemRowStyle.price}>{`$ ${price}`}</Text>
   </TouchableOpacity>
 );
 
