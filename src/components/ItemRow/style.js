@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { colors } from '../../styles';
 
-export const itemRowStyle = StyleSheet.create({
+export const styles = StyleSheet.create({
   itemRow: {
     width: '100%',
     backgroundColor: '#fff',
@@ -41,24 +41,33 @@ export const itemRowStyle = StyleSheet.create({
     color: colors.secondary_color,
     paddingTop: 4,
     overflow: 'hidden',
-    height: 24,
-  },
-  subwayRow: {
-    display: 'flex',
-    flexDirection: 'row',
+    height: 34,
   },
   specification: {
     height: '100%',
     padding: 5,
     paddingLeft: 10,
-    flex: 4,
+    flex: 10,
+  },
+  property: {
+    flex: 3,
+    alignSelf: 'flex-start',
   },
   price: {
     color: colors.primary_color,
     fontWeight: 'bold',
+    fontSize: 20,
+    paddingBottom: 5,
+  },
+  facilities: {
     fontSize: 18,
-    position: 'absolute',
-    right: 10,
-    top: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  facilities__child: {
+    color: colors.secondary_color,
+    fontSize: 12,
   },
 });
