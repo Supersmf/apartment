@@ -1,13 +1,18 @@
-// @flow
 import React from 'react';
-import {Navigation} from 'react-native-navigation';
-import {Provider} from 'react-redux';
+import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux';
 import createStore from '../store/createStore';
-import {MainScreen, PropertyScreen, ApartmentDetailsScreen} from '../screens';
+import {
+  MainScreen,
+  PropertyScreen,
+  ApartmentDetailsScreen,
+  MapScreen,
+} from '../screens';
 import {
   MAIN_SCREEN,
   PROPERTY_SCREEN,
   APARTMENT_DETAILS_SCREEN,
+  MAP_SCREEN,
 } from './Screens';
 
 const initialState = window.___INITIAL_STATE__;
@@ -21,13 +26,13 @@ const WrappedComponent = Component => props => (
 
 export default function() {
   Navigation.registerComponent(MAIN_SCREEN, () => WrappedComponent(MainScreen));
+  Navigation.registerComponent(MAP_SCREEN, () => WrappedComponent(MapScreen));
   Navigation.registerComponent(PROPERTY_SCREEN, () =>
     WrappedComponent(PropertyScreen),
   );
   Navigation.registerComponent(APARTMENT_DETAILS_SCREEN, () =>
     WrappedComponent(ApartmentDetailsScreen),
   );
-  // Navigation.registerComponent(LOGIN_SCREEN, () => WrappedComponent(LoginScreen));
   console.info('All screens have been registered...');
 }
 
