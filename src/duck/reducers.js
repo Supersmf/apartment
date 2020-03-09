@@ -1,5 +1,4 @@
-// @flow
-import {handleActions} from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import {
   fetchRentApartmentsRequest,
   fetchRentApartmentsSuccess,
@@ -18,9 +17,9 @@ const fetchRentApartmentsRequestHandler = state => ({
   ...state,
   isFlatsFetching: true,
 });
-const fetchRentApartmentsSuccessHandler = (state, {payload}) => ({
+const fetchRentApartmentsSuccessHandler = (state, { payload }) => ({
   ...state,
-  apartments: payload,
+  apartments: state.apartments.concat(payload),
   isFlatsFetching: false,
 });
 

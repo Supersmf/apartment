@@ -1,4 +1,3 @@
-// @flow
 import {
   fetchRentApartmentsRequest,
   fetchRentApartmentsSuccess,
@@ -6,7 +5,7 @@ import {
 } from './actions';
 import api from '../services/api';
 
-const fetchRentApartments = ({onSuccess, onFailure}) => async (
+const fetchRentApartments = ({ onComplete, page }) => async (
   dispatch: Function,
   getState: Function,
 ) => {
@@ -14,17 +13,14 @@ const fetchRentApartments = ({onSuccess, onFailure}) => async (
 
   try {
     const state = getState();
-    const {city, roomsCount} = state.main;
-    const {data} = await api.fetchRentApartments(city, roomsCount);
-
+    const { city, roomsCount } = state.main;
+    const { data } = await api.fetchRentApartments(city, roomsCount, page);
     dispatch(fetchRentApartmentsSuccess(data.data));
-
-    onSuccess();
   } catch (err) {
     console.error(err);
     dispatch(fetchRentApartmentsFailure());
-    onFailure();
   }
+  onComplete();
 };
 
-export {fetchRentApartments};
+export { fetchRentApartments };
