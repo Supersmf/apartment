@@ -1,8 +1,19 @@
 import React from 'react';
 import { View, Text, ScrollView, RefreshControl, FlatList } from 'react-native';
+import Spinner from 'react-native-spinkit';
 import ItemRow from '../../components/ItemRow/ItemRow';
 import { pushApartmentDetailsScreen } from '../../navigation/Navigation';
 import { styles } from './styles';
+import { colors } from '../../styles';
+
+const Loader = () => (
+  <Spinner
+    style={styles.spinner}
+    color={colors.secondary_color}
+    size={50}
+    type={'ThreeBounce'}
+  />
+);
 
 const MainScreen = ({
   apartments,
@@ -11,22 +22,11 @@ const MainScreen = ({
   componentId,
   handleLoadMore,
 }) => (
-  // <ScrollView
-  //   style={styles.container}
-  //   refreshControl={
-  //     <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-  //   }>
-  // {apartments.map(apartment => (
-  //   <ItemRow
-  //     key={apartment._id}
-  //     {...apartment}
-  //     onPress={() => pushApartmentDetailsScreen(componentId, apartment)}
-  //   />
-  // ))}
-  <View>
+  <View style={styles.container}>
     <Text style={styles.title}>Minsk</Text>
     <Text style={styles.subtitle} />
     <FlatList
+      style={styles.list}
       data={apartments}
       renderItem={({ item }) => (
         <ItemRow
@@ -38,10 +38,11 @@ const MainScreen = ({
       keyExtractor={item => item._id}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.01}
-      // refreshing={handleRefresh}
+      ListFooterComponent={Loader}
+      refreshing={handleRefresh}
+      // ListHeaderComponent={Loader}
     />
   </View>
-  // </ScrollView>
 );
 
 export default MainScreen;

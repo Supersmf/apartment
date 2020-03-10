@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import MainScreen from './MainScreen';
 import { fetchRentApartments } from '../../duck/thunk';
+import { LIMIT_ITEMS_COUNT } from '../../constants';
 
 const MainScreenContainer = ({
   dispatchFetchRentApartments,
@@ -9,25 +10,30 @@ const MainScreenContainer = ({
   componentId,
 }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const page = useRef(1);
+  const [page, setPage] = useState(1);
 
-  const getApartment = useCallback(() => {
-    dispatchFetchRentApartments({
-      page: page.current,
-      onComplete: () => setIsRefreshing(false),
-    });
-  }, [dispatchFetchRentApartments]);
+  useEffect(() => {
+    setPage(apartments.length / LIMIT_ITEMS_COUNT);
+  }, [apartments]);
+
+  const getApartment = useCallback(
+    currentPage => {
+      dispatchFetchRentApartments({
+        page: currentPage || page + 1,
+        onComplete: () => setIsRefreshing(false),
+      });
+    },
+    [dispatchFetchRentApartments, page],
+  );
 
   const handleRefresh = useCallback(() => {
     setIsRefreshing(true);
-    getApartment();
-    page.current = 1;
+    getApartment(1);
   }, [getApartment]);
 
   useEffect(handleRefresh, []);
 
   const handleLoadMore = useCallback(() => {
-    page.current += 1;
     getApartment();
   }, [getApartment]);
 
