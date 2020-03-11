@@ -20,7 +20,10 @@ const fetchRentApartments = ({ onComplete, page }) => async (
     console.error(err);
     dispatch(fetchRentApartmentsFailure());
   }
-  onComplete();
+
+  if (onComplete) {
+    onComplete();
+  }
 };
 
 export { fetchRentApartments };

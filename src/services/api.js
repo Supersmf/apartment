@@ -1,5 +1,5 @@
 import axios from 'axios';
-import LIMIT_ITEMS_COUNT from '../constants';
+import { LIMIT_ITEMS_COUNT } from '../constants';
 
 const api = axios.create({
   baseURL: 'https://scraped-api.herokuapp.com',

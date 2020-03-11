@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import MainScreen from './MainScreen';
 import { fetchRentApartments } from '../../duck/thunk';
 import { LIMIT_ITEMS_COUNT } from '../../constants';
+import { Animated } from 'react-native';
 
 const MainScreenContainer = ({
   dispatchFetchRentApartments,
@@ -10,40 +11,51 @@ const MainScreenContainer = ({
   componentId,
 }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [page, setPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [nextPage, setNextPage] = useState(1);
 
   useEffect(() => {
-    setPage(apartments.length / LIMIT_ITEMS_COUNT);
+    setNextPage(apartments.length / LIMIT_ITEMS_COUNT + 1);
   }, [apartments]);
 
   const getApartment = useCallback(
-    currentPage => {
+    (completeFunction, currentPage) => {
       dispatchFetchRentApartments({
-        page: currentPage || page + 1,
-        onComplete: () => setIsRefreshing(false),
+        page: currentPage || nextPage,
+        onComplete: completeFunction,
       });
     },
-    [dispatchFetchRentApartments, page],
+    [dispatchFetchRentApartments, nextPage],
   );
+
+  useEffect(getApartment, []);
 
   const handleRefresh = useCallback(() => {
     setIsRefreshing(true);
-    getApartment(1);
+    getApartment(() => setIsRefreshing(false), 1);
   }, [getApartment]);
-
-  useEffect(handleRefresh, []);
 
   const handleLoadMore = useCallback(() => {
-    getApartment();
+    setIsLoadingMore(true);
+    getApartment(() => setIsLoadingMore(false));
   }, [getApartment]);
+
+  const scrollPos = new Animated.Value(0);
+  const scrollSinkY = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollPos } } }],
+    { useNativeDriver: true },
+  );
 
   return (
     <MainScreen
       apartments={apartments}
       isRefreshing={isRefreshing}
+      isLoadingMore={isLoadingMore}
       handleRefresh={handleRefresh}
       componentId={componentId}
       handleLoadMore={handleLoadMore}
+      scrollPos={scrollPos}
+      scrollSinkY={scrollSinkY}
     />
   );
 };

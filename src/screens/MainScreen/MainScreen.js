@@ -1,31 +1,27 @@
 import React from 'react';
-import { View, Text, ScrollView, RefreshControl, FlatList } from 'react-native';
+import { View, Text, RefreshControl, Animated } from 'react-native';
 import Spinner from 'react-native-spinkit';
 import ItemRow from '../../components/ItemRow/ItemRow';
 import { pushApartmentDetailsScreen } from '../../navigation/Navigation';
 import { styles } from './styles';
 import { colors } from '../../styles';
-
-const Loader = () => (
-  <Spinner
-    style={styles.spinner}
-    color={colors.secondary_color}
-    size={50}
-    type={'ThreeBounce'}
-  />
-);
+import Spindicator from '../../components/Spindicator';
 
 const MainScreen = ({
   apartments,
   handleRefresh,
   isRefreshing,
+  isLoadingMore,
   componentId,
   handleLoadMore,
+  scrollPos,
+  scrollSinkY,
 }) => (
   <View style={styles.container}>
     <Text style={styles.title}>Minsk</Text>
     <Text style={styles.subtitle} />
-    <FlatList
+    <Spindicator value={scrollPos} style={styles.spindicator} />
+    <Animated.FlatList
       style={styles.list}
       data={apartments}
       renderItem={({ item }) => (
@@ -38,9 +34,28 @@ const MainScreen = ({
       keyExtractor={item => item._id}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.01}
-      ListFooterComponent={Loader}
-      refreshing={handleRefresh}
-      // ListHeaderComponent={Loader}
+      ListFooterComponent={
+        isLoadingMore && (
+          <Spinner
+            style={styles.spinner}
+            color={colors.secondary_color}
+            size={50}
+            type={'ThreeBounce'}
+          />
+        )
+      }
+      ListEmptyComponent={() => (
+        <Spinner
+          style={styles.emptySpinner}
+          color={colors.primary_color}
+          size={50}
+          type={'9CubeGrid'}
+        />
+      )}
+      onScroll={scrollSinkY}
+      refreshControl={
+        <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
+      }
     />
   </View>
 );
