@@ -5,7 +5,7 @@ import {
 } from './actions';
 import api from '../services/api';
 
-const fetchRentApartments = ({ onComplete, page }) => async (
+const fetchRentApartments = ({ onComplete, page, isRefresh }) => async (
   dispatch: Function,
   getState: Function,
 ) => {
@@ -15,7 +15,12 @@ const fetchRentApartments = ({ onComplete, page }) => async (
     const state = getState();
     const { city, roomsCount } = state.main;
     const { data } = await api.fetchRentApartments(city, roomsCount, page);
-    dispatch(fetchRentApartmentsSuccess(data.data));
+    dispatch(
+      fetchRentApartmentsSuccess({
+        data: data.data,
+        isRefresh,
+      }),
+    );
   } catch (err) {
     console.error(err);
     dispatch(fetchRentApartmentsFailure());

@@ -47,17 +47,22 @@ export const styles = StyleSheet.create({
     height: '100%',
     padding: 5,
     paddingLeft: 10,
-    flex: 10,
+    flex: 11,
   },
   property: {
-    flex: 3,
+    flex: 4,
     alignSelf: 'flex-start',
+  },
+  priceContainer: {
+    paddingBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'nowrap',
   },
   price: {
     color: colors.primary_color,
     fontWeight: 'bold',
-    fontSize: 20,
-    paddingBottom: 5,
+    fontSize: 16,
   },
   facilities: {
     fontSize: 18,
@@ -69,5 +74,10 @@ export const styles = StyleSheet.create({
   facilities__child: {
     color: colors.secondary_color,
     fontSize: 12,
+  },
+  roomsCount: {
+    color: '#009893',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });

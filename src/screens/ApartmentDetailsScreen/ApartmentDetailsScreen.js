@@ -9,9 +9,9 @@ import {
   Linking,
   ScrollView,
 } from 'react-native';
-import ImageCarousel from '../../components/ImageCarousel';
-import Delimiter from '../../components/Delimiter';
-import {colors} from '../../styles';
+import ImageCarousel from '../../common/components/ImageCarousel';
+import Delimiter from '../../common/components/Delimiter';
+import { colors } from '../../common/styles';
 
 const ApartmentDetailScreen = ({
   city,

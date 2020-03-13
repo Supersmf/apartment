@@ -4,7 +4,6 @@ import { styles } from './style';
 import IconFontisto from 'react-native-vector-icons/Fontisto';
 import IconFoundation from 'react-native-vector-icons/Foundation';
 import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { colors } from '../../styles';
 
 const ItemRow = ({
   images,
@@ -42,7 +41,10 @@ const ItemRow = ({
       </Text>
     </View>
     <View style={styles.property}>
-      <Text style={styles.price}>{`$ ${price}`}</Text>
+      <View style={styles.priceContainer}>
+        <Text style={styles.price}>{`$${price} `}</Text>
+        <Text style={styles.roomsCount}>{`${roomsCount}-к`}</Text>
+      </View>
       <View style={styles.facilities}>
         {!!subway && (
           <IconFontisto name="subway" style={styles.facilities__child} />

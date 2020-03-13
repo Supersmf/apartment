@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, RefreshControl, Animated } from 'react-native';
 import Spinner from 'react-native-spinkit';
-import ItemRow from '../../components/ItemRow/ItemRow';
 import { pushApartmentDetailsScreen } from '../../navigation/Navigation';
+import ItemRow from '../../common/components/ItemRow';
+import Spindicator from '../../common/components/Spindicator';
 import { styles } from './styles';
-import { colors } from '../../styles';
-import Spindicator from '../../components/Spindicator';
+import { colors } from '../../common/styles';
 
 const MainScreen = ({
   apartments,

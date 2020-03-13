@@ -1,44 +1,74 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import MainScreen from './MainScreen';
 import { fetchRentApartments } from '../../duck/thunk';
 import { LIMIT_ITEMS_COUNT } from '../../constants';
 import { Animated } from 'react-native';
+import useToggle from '../../common/hooks/useToggle';
 
 const MainScreenContainer = ({
   dispatchFetchRentApartments,
   apartments,
   componentId,
 }) => {
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const {
+    isToggledOn: isRefreshing,
+    setToggleOn: setIsRefreshing,
+    setToggleOff: unsetIsRefreshing,
+  } = useToggle();
+  const {
+    isToggledOn: isLoadingMore,
+    setToggleOn: setIsLoadingMore,
+    setToggleOff: unsetIsLoadingMore,
+  } = useToggle();
+  const {
+    isToggledOn: isApartmentsFetching,
+    setToggleOn: setIsApartmentsFetching,
+    setToggleOff: unsetIsApartmentsFetching,
+  } = useToggle();
   const [nextPage, setNextPage] = useState(1);
 
   useEffect(() => {
-    setNextPage(apartments.length / LIMIT_ITEMS_COUNT + 1);
+    setNextPage(Math.floor(apartments.length / LIMIT_ITEMS_COUNT) + 1);
   }, [apartments]);
 
+  const setAllLoadingFalse = useCallback(() => {
+    unsetIsRefreshing();
+    unsetIsLoadingMore();
+    unsetIsApartmentsFetching();
+  }, [unsetIsApartmentsFetching, unsetIsLoadingMore, unsetIsRefreshing]);
+
   const getApartment = useCallback(
-    (completeFunction, currentPage) => {
-      dispatchFetchRentApartments({
-        page: currentPage || nextPage,
-        onComplete: completeFunction,
-      });
+    (currentPage, isRefresh) => {
+      if (!isApartmentsFetching) {
+        setIsApartmentsFetching();
+        dispatchFetchRentApartments({
+          page: currentPage || nextPage,
+          onComplete: setAllLoadingFalse,
+          isRefresh,
+        });
+      }
     },
-    [dispatchFetchRentApartments, nextPage],
+    [
+      dispatchFetchRentApartments,
+      isApartmentsFetching,
+      nextPage,
+      setAllLoadingFalse,
+      setIsApartmentsFetching,
+    ],
   );
 
   useEffect(getApartment, []);
 
   const handleRefresh = useCallback(() => {
-    setIsRefreshing(true);
-    getApartment(() => setIsRefreshing(false), 1);
-  }, [getApartment]);
+    setIsRefreshing();
+    getApartment(1, true);
+  }, [getApartment, setIsRefreshing]);
 
   const handleLoadMore = useCallback(() => {
     setIsLoadingMore(true);
-    getApartment(() => setIsLoadingMore(false));
-  }, [getApartment]);
+    getApartment();
+  }, [getApartment, setIsLoadingMore]);
 
   const scrollPos = new Animated.Value(0);
   const scrollSinkY = Animated.event(

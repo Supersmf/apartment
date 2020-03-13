@@ -17,14 +17,26 @@ const fetchRentApartmentsRequestHandler = state => ({
   ...state,
   isFlatsFetching: true,
 });
-const fetchRentApartmentsSuccessHandler = (state, { payload }) => ({
-  ...state,
-  apartments:
-    state.apartments.length && state.apartments[0]._id === payload._id
-      ? state.apartments
-      : state.apartments.concat(payload),
-  isFlatsFetching: false,
-});
+
+const fetchRentApartmentsSuccessHandler = (
+  state,
+  { payload: { data, isRefresh } },
+) => {
+  let apartments;
+
+  if (isRefresh) {
+    apartments =
+      state.apartments[0]._id === data[0]._id ? state.apartments : data;
+  } else {
+    apartments = state.apartments.concat(data);
+  }
+
+  return {
+    ...state,
+    apartments,
+    isFlatsFetching: false,
+  };
+};
 
 const fetchRentApartmentsFailureHandler = state => ({
   ...state,
