@@ -3,14 +3,16 @@ import {
   fetchRentApartmentsRequest,
   fetchRentApartmentsSuccess,
   fetchRentApartmentsFailure,
+  changeCity,
+  changeRoomsCount,
 } from './actions';
+import { CITIES, ROOMS_COUNT } from '../constants';
 
 export const INITIAL_STATE = {
-  flats: [],
-  isFlatsFetching: false,
-  city: 'minsk',
-  roomsCount: '1',
   apartments: [],
+  isFlatsFetching: false,
+  city: CITIES.MINSK,
+  roomsCount: ROOMS_COUNT,
 };
 
 const fetchRentApartmentsRequestHandler = state => ({
@@ -43,11 +45,23 @@ const fetchRentApartmentsFailureHandler = state => ({
   isFlatsFetching: false,
 });
 
+const changeCityHandler = (state, { payload }) => ({
+  ...state,
+  city: CITIES[payload],
+});
+
+const changeRoomsCountHandler = (state, payload: roomsCount) => ({
+  ...state,
+  roomsCount,
+});
+
 const reducer = handleActions(
   {
     [fetchRentApartmentsRequest]: fetchRentApartmentsRequestHandler,
     [fetchRentApartmentsSuccess]: fetchRentApartmentsSuccessHandler,
     [fetchRentApartmentsFailure]: fetchRentApartmentsFailureHandler,
+    [changeCity]: changeCityHandler,
+    [changeRoomsCount]: changeRoomsCountHandler,
   },
   INITIAL_STATE,
 );
