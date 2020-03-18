@@ -5,6 +5,7 @@ import { fetchRentApartments } from '../../duck/thunk';
 import { LIMIT_ITEMS_COUNT } from '../../constants';
 import { Animated } from 'react-native';
 import useToggle from '../../common/hooks/useToggle';
+import useNavigationEvent from '../../common/hooks/useNavigationEvent';
 
 const MainScreenContainer = ({
   dispatchFetchRentApartments,
@@ -27,6 +28,14 @@ const MainScreenContainer = ({
     setToggleOff: unsetIsApartmentsFetching,
   } = useToggle();
   const [nextPage, setNextPage] = useState(1);
+
+  const onMount = useCallback(() => {
+    if (!apartments.length) {
+      getApartment();
+    }
+  }, [apartments.length, getApartment]);
+
+  useNavigationEvent({ componentId, onMount });
 
   useEffect(() => {
     setNextPage(Math.floor(apartments.length / LIMIT_ITEMS_COUNT) + 1);
@@ -57,8 +66,6 @@ const MainScreenContainer = ({
       setIsApartmentsFetching,
     ],
   );
-
-  useEffect(getApartment, []);
 
   const handleRefresh = useCallback(() => {
     setIsRefreshing();

@@ -45,12 +45,9 @@ const fetchRentApartmentsFailureHandler = state => ({
   isFlatsFetching: false,
 });
 
-const changeCityHandler = (state, { payload }) => ({
-  ...state,
-  city: CITIES[payload],
-});
+const changeCityHandler = (state, { payload: city }) => ({ ...state, city });
 
-const changeRoomsCountHandler = (state, payload: roomsCount) => ({
+const changeRoomsCountHandler = (state, { payload: roomsCount }) => ({
   ...state,
   roomsCount,
 });

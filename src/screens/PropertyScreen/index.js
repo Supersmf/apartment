@@ -1,14 +1,28 @@
 import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropertyScreen from './PropertyScreen';
-import { changeCity } from '../../duck/actions';
+import { changeCity, changeRoomsCount } from '../../duck/actions';
+import useNavigationEvent from '../../common/hooks/useNavigationEvent';
 
-const PropertyScreenContainer = ({ city, roomsCount, dispatchChangeCity }) => {
+const PropertyScreenContainer = ({
+  city,
+  roomsCount,
+  componentId,
+  dispatchChangeCity,
+  dispatchChangeRoomsCount,
+}) => {
   const [currentCity, setCurrentCity] = useState(city);
   const [checkedRooms, setCheckedRooms] = useState(roomsCount);
 
+  const onUnMount = useCallback(() => {
+    dispatchChangeCity(currentCity);
+    dispatchChangeRoomsCount(checkedRooms);
+  }, [checkedRooms, currentCity, dispatchChangeCity, dispatchChangeRoomsCount]);
+
+  useNavigationEvent({ componentId, onUnMount });
+
   const handleCheckBoxChange = currentLabel => {
-    const newCheckedRooms = checkedRooms.slice();
+    const newCheckedRooms = [...checkedRooms];
     const currentRoomIndex = checkedRooms.findIndex(
       ({ label }) => label === currentLabel,
     );
@@ -22,11 +36,8 @@ const PropertyScreenContainer = ({ city, roomsCount, dispatchChangeCity }) => {
   };
 
   const changeCityHandler = useCallback(
-    selectedCity => {
-      dispatchChangeCity(selectedCity);
-      setCurrentCity(selectedCity);
-    },
-    [dispatchChangeCity],
+    selectedCity => setCurrentCity(selectedCity),
+    [],
   );
 
   return (
@@ -46,6 +57,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   dispatchChangeCity: changeCity,
+  dispatchChangeRoomsCount: changeRoomsCount,
 };
 
 export default connect(
