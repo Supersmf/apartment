@@ -6,8 +6,16 @@ const api = axios.create({
 });
 
 const fetchRentApartments = (city, roomCount, page) =>
-  console.log(`/domovita?limit=${LIMIT_ITEMS_COUNT}&page=${page}`) ||
-  api.get(`/domovita?limit=${LIMIT_ITEMS_COUNT}&page=${page}`);
+  console.log(
+    `/domovita?city=${city}&roomsCount=${roomCount
+      .map(({ label }) => label)
+      .join()}&limit=${LIMIT_ITEMS_COUNT}&page=${page}`,
+  ) ||
+  api.get(
+    `/domovita?city=${city}&roomsCount=${roomCount
+      .map(({ label }) => label)
+      .join()}&limit=${LIMIT_ITEMS_COUNT}&page=${page}`,
+  );
 
 export default {
   fetchRentApartments,

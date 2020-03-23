@@ -14,7 +14,11 @@ const fetchRentApartments = ({ onComplete, page, isRefresh }) => async (
   try {
     const state = getState();
     const { city, roomsCount } = state.main;
-    const { data } = await api.fetchRentApartments(city, roomsCount, page);
+    const { data } = await api.fetchRentApartments(
+      city,
+      roomsCount.filter(({ isAvailable }) => isAvailable),
+      page,
+    );
     dispatch(
       fetchRentApartmentsSuccess({
         data: data.data,

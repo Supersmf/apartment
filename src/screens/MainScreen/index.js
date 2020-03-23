@@ -5,12 +5,14 @@ import { fetchRentApartments } from '../../duck/thunk';
 import { LIMIT_ITEMS_COUNT } from '../../constants';
 import { Animated } from 'react-native';
 import useToggle from '../../common/hooks/useToggle';
-import useNavigationEvent from '../../common/hooks/useNavigationEvent';
+import { useComponentDidAppear } from '../../common/hooks/useNavigationEvent';
 
 const MainScreenContainer = ({
-  dispatchFetchRentApartments,
+  city,
   apartments,
   componentId,
+  dispatchFetchRentApartments,
+  isFilterChanged,
 }) => {
   const {
     isToggledOn: isRefreshing,
@@ -29,17 +31,18 @@ const MainScreenContainer = ({
   } = useToggle();
   const [nextPage, setNextPage] = useState(1);
 
-  const onMount = useCallback(() => {
+  useComponentDidAppear(() => {
     if (!apartments.length) {
       getApartment();
     }
-  }, [apartments.length, getApartment]);
-
-  useNavigationEvent({ componentId, onMount });
+  }, componentId);
 
   useEffect(() => {
     setNextPage(Math.floor(apartments.length / LIMIT_ITEMS_COUNT) + 1);
-  }, [apartments]);
+    if (isFilterChanged) {
+      getApartment(1);
+    }
+  }, [apartments, getApartment, isFilterChanged]);
 
   const setAllLoadingFalse = useCallback(() => {
     unsetIsRefreshing();
@@ -73,9 +76,11 @@ const MainScreenContainer = ({
   }, [getApartment, setIsRefreshing]);
 
   const handleLoadMore = useCallback(() => {
-    setIsLoadingMore(true);
-    getApartment();
-  }, [getApartment, setIsLoadingMore]);
+    if (!(apartments.length % LIMIT_ITEMS_COUNT)) {
+      setIsLoadingMore(true);
+      getApartment();
+    }
+  }, [apartments.length, getApartment, setIsLoadingMore]);
 
   const scrollPos = new Animated.Value(0);
   const scrollSinkY = Animated.event(
@@ -85,6 +90,7 @@ const MainScreenContainer = ({
 
   return (
     <MainScreen
+      city={city}
       apartments={apartments}
       isRefreshing={isRefreshing}
       isLoadingMore={isLoadingMore}
@@ -98,7 +104,9 @@ const MainScreenContainer = ({
 };
 
 const mapStateToProps = state => ({
+  city: state.main.city,
   apartments: state.main.apartments,
+  isFilterChanged: state.main.isFilterChanged,
 });
 
 const mapDispatchToProps = {

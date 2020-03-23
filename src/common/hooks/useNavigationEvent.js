@@ -1,21 +1,32 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { Navigation } from 'react-native-navigation';
 
-export const useNavigationEvent = ({ componentId, onMount, onUnMount }) => {
-  useEffect(() => {
-    const navListener = Navigation.events().bindComponent(this, componentId);
-    return () => {
-      navListener.remove();
-    };
-  }, [componentId]);
+const useComponentDidAppear = (handler, componentId) => {
+  useLayoutEffect(() => {
+    const subscription = Navigation.events().registerComponentDidAppearListener(
+      event => {
+        if (componentId && event.componentId === componentId) {
+          handler(event);
+        }
+      },
+    );
 
-  if (onMount) {
-    this.componentDidAppear = onMount;
-  }
-
-  if (onUnMount) {
-    this.componentDidDisappear = onUnMount;
-  }
+    return () => subscription.remove();
+  }, [handler, componentId]);
 };
 
-export default useNavigationEvent;
+const useComponentDidDisappear = (handler, componentId) => {
+  useLayoutEffect(() => {
+    const subscription = Navigation.events().registerComponentDidDisappearListener(
+      event => {
+        if (componentId && event.componentId === componentId) {
+          handler(event);
+        }
+      },
+    );
+
+    return () => subscription.remove();
+  }, [handler, componentId]);
+};
+
+export { useComponentDidAppear, useComponentDidDisappear };

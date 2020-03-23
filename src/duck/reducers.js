@@ -13,6 +13,7 @@ export const INITIAL_STATE = {
   isFlatsFetching: false,
   city: CITIES.MINSK,
   roomsCount: ROOMS_COUNT,
+  isFilterChanged: false,
 };
 
 const fetchRentApartmentsRequestHandler = state => ({
@@ -30,13 +31,14 @@ const fetchRentApartmentsSuccessHandler = (
     apartments =
       state.apartments[0]._id === data[0]._id ? state.apartments : data;
   } else {
-    apartments = state.apartments.concat(data);
+    apartments = state.isFilterChanged ? data : state.apartments.concat(data);
   }
 
   return {
     ...state,
     apartments,
     isFlatsFetching: false,
+    isFilterChanged: false,
   };
 };
 
@@ -45,11 +47,16 @@ const fetchRentApartmentsFailureHandler = state => ({
   isFlatsFetching: false,
 });
 
-const changeCityHandler = (state, { payload: city }) => ({ ...state, city });
+const changeCityHandler = (state, { payload: city }) => ({
+  ...state,
+  city: CITIES[city] || city,
+  isFilterChanged: true,
+});
 
 const changeRoomsCountHandler = (state, { payload: roomsCount }) => ({
   ...state,
   roomsCount,
+  isFilterChanged: true,
 });
 
 const reducer = handleActions(

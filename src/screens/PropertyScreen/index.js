@@ -2,7 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropertyScreen from './PropertyScreen';
 import { changeCity, changeRoomsCount } from '../../duck/actions';
-import useNavigationEvent from '../../common/hooks/useNavigationEvent';
+import { isArraysEqual } from '../../common/utils/arrayUtils';
+import { useComponentDidDisappear } from '../../common/hooks/useNavigationEvent';
+import { CITIES } from '../../constants';
 
 const PropertyScreenContainer = ({
   city,
@@ -15,11 +17,23 @@ const PropertyScreenContainer = ({
   const [checkedRooms, setCheckedRooms] = useState(roomsCount);
 
   const onUnMount = useCallback(() => {
-    dispatchChangeCity(currentCity);
-    dispatchChangeRoomsCount(checkedRooms);
-  }, [checkedRooms, currentCity, dispatchChangeCity, dispatchChangeRoomsCount]);
+    if (!(currentCity === city || CITIES[currentCity] === city)) {
+      dispatchChangeCity(currentCity);
+    }
 
-  useNavigationEvent({ componentId, onUnMount });
+    if (!isArraysEqual(checkedRooms, roomsCount)) {
+      dispatchChangeRoomsCount(checkedRooms);
+    }
+  }, [
+    checkedRooms,
+    city,
+    currentCity,
+    dispatchChangeCity,
+    dispatchChangeRoomsCount,
+    roomsCount,
+  ]);
+
+  useComponentDidDisappear(onUnMount, componentId);
 
   const handleCheckBoxChange = currentLabel => {
     const newCheckedRooms = [...checkedRooms];

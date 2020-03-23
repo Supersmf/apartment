@@ -8,6 +8,7 @@ import { styles } from './styles';
 import { colors } from '../../common/styles';
 
 const MainScreen = ({
+  city,
   apartments,
   handleRefresh,
   isRefreshing,
@@ -18,7 +19,7 @@ const MainScreen = ({
   scrollSinkY,
 }) => (
   <View style={styles.container}>
-    <Text style={styles.title}>Minsk</Text>
+    <Text style={styles.title}>{city}</Text>
     <Text style={styles.subtitle} />
     <Spindicator value={scrollPos} style={styles.spindicator} />
     <Animated.FlatList
