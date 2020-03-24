@@ -8,12 +8,12 @@ const api = axios.create({
 const fetchRentApartments = (city, roomCount, page) =>
   console.log(
     `/domovita?city=${city}&roomsCount=${roomCount
-      .map(({ label }) => label)
+      .map(({ value }) => value)
       .join()}&limit=${LIMIT_ITEMS_COUNT}&page=${page}`,
   ) ||
   api.get(
     `/domovita?city=${city}&roomsCount=${roomCount
-      .map(({ label }) => label)
+      .map(({ value }) => value)
       .join()}&limit=${LIMIT_ITEMS_COUNT}&page=${page}`,
   );
 

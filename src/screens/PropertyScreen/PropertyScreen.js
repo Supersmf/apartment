@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, Picker } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import { CITIES } from '../../constants';
 import styles from './styles';
+import ButtonGroup from '../../common/components/ButtonGroup';
 
 const PropertyScreen = ({
   city,
   changeCityHandler,
   checkedRooms,
-  handleCheckBoxChange,
+  changeRoomsCountHandler,
 }) => (
   <View>
     <Text>PropertyScreen</Text>
@@ -16,7 +16,7 @@ const PropertyScreen = ({
       <Text>City: </Text>
       <Picker
         selectedValue={city}
-        style={{ height: 50, width: 200 }}
+        style={styles.cityPicker}
         onValueChange={changeCityHandler}>
         {Object.keys(CITIES).map(cityItem => (
           <Picker.Item
@@ -27,17 +27,12 @@ const PropertyScreen = ({
         ))}
       </Picker>
     </View>
-    <View style={styles.checkBoxContainer}>
-      <Text style={styles.checkBoxContainerTitle}>Rooms count:</Text>
-      {checkedRooms.map(({ label, isAvailable }) => (
-        <View key={label} style={styles.checkBoxField}>
-          <Text>{label}</Text>
-          <CheckBox
-            value={isAvailable}
-            onValueChange={() => handleCheckBoxChange(label)}
-          />
-        </View>
-      ))}
+    <View style={styles.buttonContainer}>
+      <Text style={styles.buttonBoxContainerTitle}>Rooms count:</Text>
+      <ButtonGroup
+        buttons={checkedRooms}
+        changeButtonsHandler={changeRoomsCountHandler}
+      />
     </View>
   </View>
 );

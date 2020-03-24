@@ -16,7 +16,7 @@ const PropertyScreenContainer = ({
   const [currentCity, setCurrentCity] = useState(city);
   const [checkedRooms, setCheckedRooms] = useState(roomsCount);
 
-  const onUnMount = useCallback(() => {
+  useComponentDidDisappear(() => {
     if (!(currentCity === city || CITIES[currentCity] === city)) {
       dispatchChangeCity(currentCity);
     }
@@ -24,30 +24,7 @@ const PropertyScreenContainer = ({
     if (!isArraysEqual(checkedRooms, roomsCount)) {
       dispatchChangeRoomsCount(checkedRooms);
     }
-  }, [
-    checkedRooms,
-    city,
-    currentCity,
-    dispatchChangeCity,
-    dispatchChangeRoomsCount,
-    roomsCount,
-  ]);
-
-  useComponentDidDisappear(onUnMount, componentId);
-
-  const handleCheckBoxChange = currentLabel => {
-    const newCheckedRooms = [...checkedRooms];
-    const currentRoomIndex = checkedRooms.findIndex(
-      ({ label }) => label === currentLabel,
-    );
-
-    newCheckedRooms.splice(currentRoomIndex, 1, {
-      ...checkedRooms[currentRoomIndex],
-      isAvailable: !checkedRooms[currentRoomIndex].isAvailable,
-    });
-
-    setCheckedRooms(newCheckedRooms);
-  };
+  }, componentId);
 
   const changeCityHandler = useCallback(
     selectedCity => setCurrentCity(selectedCity),
@@ -59,7 +36,7 @@ const PropertyScreenContainer = ({
       city={currentCity}
       checkedRooms={checkedRooms}
       changeCityHandler={changeCityHandler}
-      handleCheckBoxChange={handleCheckBoxChange}
+      changeRoomsCountHandler={setCheckedRooms}
     />
   );
 };
