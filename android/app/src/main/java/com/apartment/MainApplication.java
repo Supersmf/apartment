@@ -8,6 +8,7 @@ import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
 import com.react.rnspinkit.RNSpinkitPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -46,7 +47,8 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new VectorIconsPackage(),
-            new RNSpinkitPackage()
+            new RNSpinkitPackage(),
+            new MapsPackage()
         );
     }
 

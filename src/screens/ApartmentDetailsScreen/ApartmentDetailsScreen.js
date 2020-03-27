@@ -14,11 +14,9 @@ import Delimiter from '../../common/components/Delimiter';
 import { colors } from '../../common/styles';
 
 const ApartmentDetailScreen = ({
-  city,
-  address,
+  location: { city, address, subway },
   images,
   roomsCount,
-  subway,
   description,
   publicationDate,
   updateDate,

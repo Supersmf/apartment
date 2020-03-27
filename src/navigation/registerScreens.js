@@ -35,15 +35,3 @@ export default function() {
   );
   console.info('All screens have been registered...');
 }
-
-// function WrappedComponent(Component) {
-//   return function inject(props) {
-//     const EnhancedComponent = () => (
-//        <Provider>
-//       <Component {...props} />
-//        </Provider>
-//     );
-
-//     return <EnhancedComponent />;
-//   };
-// }

@@ -8,12 +8,10 @@ import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const ItemRow = ({
   images,
   roomsCount,
-  city,
-  address,
+  location: { city, address, subway },
   description,
   place,
   price,
-  subway,
   onPress,
   updateDate,
   facilities: {
